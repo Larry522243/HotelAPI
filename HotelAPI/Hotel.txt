@@ -2,7 +2,7 @@ CREATE TABLE [dbo].[Members] (
     [MId]       UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
     [FirstName] NVARCHAR (50)    NOT NULL,
     [LastName]  NVARCHAR (50)    NOT NULL,
-    [Gender]    NVARCHAR (50)    NOT NULL,
+    [Gender]    INT              NOT NULL,
     [Birth]     DATE             NOT NULL,
     [Phone]     NVARCHAR (50)    NOT NULL,
     [Email]     NVARCHAR (100)   NOT NULL,
@@ -21,7 +21,7 @@ CREATE TABLE [dbo].[RoomTypes] (
     [RTPeople] INT            NOT NULL,
     [RTFloor]  NVARCHAR (50)  NOT NULL,
     [RTPrice]  INT            NOT NULL,
-    [RTMark]   NVARCHAR (200) NOT NULL,
+    [RTMark]   NVARCHAR (200) NULL,
     PRIMARY KEY CLUSTERED ([RTId] ASC)
 );
 -----------------------------------------------------------------------
@@ -56,6 +56,7 @@ CREATE TABLE [dbo].[Haves] (
 CREATE TABLE [dbo].[Comments] (
     [CId]        INT              IDENTITY (1, 1) NOT NULL,
     [CreateDate] DATE             NOT NULL,
+    [Star]       INT              NOT NULL,
     [Content]    NVARCHAR (1000)  NOT NULL,
     [MId]        UNIQUEIDENTIFIER NOT NULL,
     PRIMARY KEY CLUSTERED ([CId] ASC),
