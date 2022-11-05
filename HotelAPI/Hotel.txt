@@ -13,71 +13,51 @@ CREATE TABLE [dbo].[Members] (
     PRIMARY KEY CLUSTERED ([MId] ASC)
 );
 -----------------------------------------------------------------------
-CREATE TABLE [dbo].[RoomTypes] (
-    [RTId]     INT            IDENTITY (1, 1) NOT NULL,
-    [RTName]   NVARCHAR (50)  NOT NULL,
-    [RTSquare] FLOAT (53)     NOT NULL,
-    [RTBed]    INT            NOT NULL,
-    [RTPeople] INT            NOT NULL,
-    [RTFloor]  NVARCHAR (50)  NOT NULL,
-    [RTPrice]  INT            NOT NULL,
-    [RTMark]   NVARCHAR (200) NULL,
-    PRIMARY KEY CLUSTERED ([RTId] ASC)
-);
------------------------------------------------------------------------
 CREATE TABLE [dbo].[Rooms] (
-    [RoomId] NVARCHAR (50) NOT NULL,
-    [RTId]   INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([RoomId] ASC),
-    FOREIGN KEY ([RTId]) REFERENCES [dbo].[RoomTypes] ([RTId])
+    [RId]     NVARCHAR (50)  NOT NULL,
+    [RName]   NVARCHAR (50)  NOT NULL,
+    [RSquare] FLOAT (53)     NOT NULL,
+    [RBed]    INT            NOT NULL,
+    [RPeople] INT            NOT NULL,
+    [RFloor]  NVARCHAR (50)  NOT NULL,
+    [RPrice]  INT            NOT NULL,
+    [RMark]   NVARCHAR (200) NULL,
+    PRIMARY KEY CLUSTERED ([RId] ASC)
 );
 -----------------------------------------------------------------------
 CREATE TABLE [dbo].[Orders] (
     [OId]        NVARCHAR (50)    NOT NULL,
-    [CreateDate] DATE             NOT NULL,
-    [CheckIn]    DATE             NOT NULL,
-    [CheckOut]   DATE             NOT NULL,
-    [OPeople]    INT              NOT NULL,
     [MId]        UNIQUEIDENTIFIER NOT NULL,
+    [CreateDate] DATETIME         NOT NULL,
+    [CheckIn]    DATETIME         NOT NULL,
+    [CheckOut]   DATETIME         NOT NULL,
+    [ORoomCnt]   INT              NOT NULL,
+    [OPeopleCnt] INT              NOT NULL,
     PRIMARY KEY CLUSTERED ([OId] ASC),
     FOREIGN KEY ([MId]) REFERENCES [dbo].[Members] ([MId])
 );
 -----------------------------------------------------------------------
-CREATE TABLE [dbo].[Haves] (
-    [Guid]   UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
-    [OId]    NVARCHAR (50)    NOT NULL,
-    [RTId]   INT              NOT NULL,
-    [HCount] INT              NOT NULL,
-    PRIMARY KEY CLUSTERED ([Guid] ASC),
-    FOREIGN KEY ([OId]) REFERENCES [dbo].[Orders] ([OId]),
-    FOREIGN KEY ([RTId]) REFERENCES [dbo].[RoomTypes] ([RTId])
-);
------------------------------------------------------------------------
 CREATE TABLE [dbo].[Comments] (
     [CId]        INT              IDENTITY (1, 1) NOT NULL,
-    [CreateDate] DATE             NOT NULL,
-    [Star]       INT              NOT NULL,
-    [Content]    NVARCHAR (1000)  NOT NULL,
     [MId]        UNIQUEIDENTIFIER NOT NULL,
+    [CreateDate] DATETIME         NOT NULL,
+    [Star]       INT              NOT NULL,
+    [Content]    NVARCHAR (1000)  NULL,
     PRIMARY KEY CLUSTERED ([CId] ASC),
     FOREIGN KEY ([MId]) REFERENCES [dbo].[Members] ([MId])
 );
 -----------------------------------------------------------------------
-CREATE TABLE [dbo].[Restaurants] (
-    [REId]    INT           IDENTITY (1, 1) NOT NULL,
-    [REName]  NVARCHAR (50) NOT NULL,
-    [REFloor] NVARCHAR (50) NOT NULL,
-    [RESeat]  INT           NOT NULL,
-    [RETime]  NVARCHAR (50) NOT NULL,
-    [REType]  NVARCHAR (50) NOT NULL,
-    PRIMARY KEY CLUSTERED ([REId] ASC)
-);
------------------------------------------------------------------------
 CREATE TABLE [dbo].[Facilities] (
+    [FId]     INT           IDENTITY (1, 1) NOT NULL,
     [FName]   NVARCHAR (50) NOT NULL,
     [FFloor]  NVARCHAR (50) NOT NULL,
     [FTime]   NVARCHAR (50) NOT NULL,
     [FPeople] INT           NOT NULL,
-    PRIMARY KEY CLUSTERED ([FName] ASC)
+    PRIMARY KEY CLUSTERED ([FId] ASC)
 );
-
+-----------------------------------------------------------------------
+CREATE TABLE [dbo].[OrderDetails] (
+    [OId] NVARCHAR (50) NOT NULL,
+    [RId] NVARCHAR (50) NOT NULL,
+    PRIMARY KEY CLUSTERED ([OId] ASC, [RId] ASC)
+);

@@ -15,6 +15,12 @@ namespace HotelAPI.Models
         public string? OId { get; set; }
 
         /// <summary>
+        /// 會員編號
+        /// </summary>
+        [Required]
+        public Guid MId { get; set; }
+
+        /// <summary>
         /// 訂單建立日期
         /// </summary>
         [Required]
@@ -33,15 +39,15 @@ namespace HotelAPI.Models
         public DateTime CheckOut { get; set; }
 
         /// <summary>
+        /// 訂單總房數
+        /// </summary>
+        [Required]
+        public int ORoomCnt { get; set; }
+
+        /// <summary>
         /// 訂單總人數
         /// </summary>
         [Required]
-        public int OPeople { get; set; }
-
-        /// <summary>
-        /// 會員編號
-        /// </summary>
-        [Required]
-        public Guid MId { get; set; }
+        public int OPeopleCnt { get; set; }
     }
 }

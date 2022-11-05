@@ -14,6 +14,12 @@ namespace HotelAPI.Models
         public int CId { get; set; }
 
         /// <summary>
+        /// 會員編號
+        /// </summary>
+        [Required]
+        public Guid MId { get; set; }
+
+        /// <summary>
         /// 評論建立日期
         /// </summary>
         [Required]
@@ -31,11 +37,5 @@ namespace HotelAPI.Models
         [Required]
         [StringLength(1000, ErrorMessage = "Maximum 1000 characters")]
         public string? Content { get; set; }
-
-        /// <summary>
-        /// 會員編號
-        /// </summary>
-        [Required]
-        public Guid MId { get; set; }
     }
 }

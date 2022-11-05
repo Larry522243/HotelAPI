@@ -8,9 +8,16 @@ namespace HotelAPI.Models
     public class Facility
     {
         /// <summary>
-        /// 公共設施名稱
+        /// 公共設施編號
         /// </summary>
         [Key]
+        public int FId { get; set; }
+
+        /// <summary>
+        /// 公共設施名稱
+        /// </summary>
+        [Required]
+        [StringLength(50, ErrorMessage = "Maximum 50 characters")]
         public string? FName { get; set; }
 
         /// <summary>
