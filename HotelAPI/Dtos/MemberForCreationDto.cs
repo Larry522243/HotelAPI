@@ -1,18 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HotelAPI.Models
+namespace HotelAPI.Dtos
 {
-    /// <summary>
-    /// 會員
-    /// </summary>
-    public class Member
+    public class MemberForCreationDto
     {
-        /// <summary>
-        /// 會員編號
-        /// </summary>
-        [Key]
-        public Guid MId { get; set; }
-
         /// <summary>
         /// 會員姓氏
         /// </summary>
@@ -81,10 +72,5 @@ namespace HotelAPI.Models
         [Required]
         [StringLength(50, ErrorMessage = "Maximum 50 characters")]
         public string? City { get; set; }
-
-        /// <summary>
-        /// 會員所有訂單
-        /// </summary>
-        public List<Order> Orders { get; set; } = new List<Order>();
     }
 }

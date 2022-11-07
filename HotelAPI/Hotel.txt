@@ -2,7 +2,7 @@ CREATE TABLE [dbo].[Members] (
     [MId]       UNIQUEIDENTIFIER DEFAULT (newid()) NOT NULL,
     [FirstName] NVARCHAR (50)    NOT NULL,
     [LastName]  NVARCHAR (50)    NOT NULL,
-    [Gender]    INT              NOT NULL,
+    [Gender]    NVARCHAR (50)    NOT NULL,
     [Birth]     DATE             NOT NULL,
     [Phone]     NVARCHAR (50)    NOT NULL,
     [Email]     NVARCHAR (100)   NOT NULL,
@@ -61,3 +61,14 @@ CREATE TABLE [dbo].[OrderDetails] (
     [RId] NVARCHAR (50) NOT NULL,
     PRIMARY KEY CLUSTERED ([OId] ASC, [RId] ASC)
 );
+-----------------------------------------------------------------------
+下方為更新資料庫為中文編碼之程式碼，DataBaseName 需更名為自己的資料庫名稱
+-----------------------------------------------------------------------
+
+ALTER DATABASE [DatabaseName] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
+ALTER DATABASE [DatabaseName] COLLATE Chinese_Taiwan_Stroke_CI_AS
+ALTER DATABASE [DatabaseName] SET MULTI_USER WITH ROLLBACK IMMEDIATE
+
+-----------------------------------------------------------------------
+新增Date資料進去資料庫時，使用'YYYYMMDD' 或 'YYYY-MM-DD'
+-----------------------------------------------------------------------
