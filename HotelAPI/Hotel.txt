@@ -63,6 +63,8 @@ CREATE TABLE [dbo].[OrderDetails] (
 );
 -----------------------------------------------------------------------
 下方為更新資料庫為中文編碼之程式碼，DataBaseName 需更名為自己的資料庫名稱
+
+對資料庫按右鍵>新增查詢
 -----------------------------------------------------------------------
 
 ALTER DATABASE [DatabaseName] SET SINGLE_USER WITH ROLLBACK IMMEDIATE
