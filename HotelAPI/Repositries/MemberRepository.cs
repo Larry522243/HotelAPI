@@ -90,7 +90,6 @@ namespace HotelAPI.Repositries
             parameters.Add("Gender", member.Gender, DbType.String);
             parameters.Add("Birth", member.Birth, DbType.DateTime);
             parameters.Add("Phone", member.Phone, DbType.String);
-            parameters.Add("Email", member.Email, DbType.String);
             parameters.Add("Password", member.Password, DbType.String);
             parameters.Add("Country", member.Country, DbType.String);
             parameters.Add("City", member.City, DbType.String);
@@ -106,7 +105,6 @@ namespace HotelAPI.Repositries
                     Gender = member.Gender,
                     Birth = member.Birth,
                     Phone = member.Phone,
-                    Email = member.Email,
                     Password = member.Password,
                     Country = member.Country,
                     City = member.City,

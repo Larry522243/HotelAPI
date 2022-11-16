@@ -39,13 +39,6 @@ namespace HotelAPI.Dtos
         public string? Phone { get; set; }
 
         /// <summary>
-        /// 會員信箱
-        /// </summary>
-        [Required]
-        [StringLength(100, ErrorMessage = "Maximum 100 characters")]
-        public string? Email { get; set; }
-
-        /// <summary>
         /// 會員密碼
         /// </summary>
         [Required]
