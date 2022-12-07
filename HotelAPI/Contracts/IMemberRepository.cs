@@ -29,5 +29,11 @@ namespace HotelAPI.Contracts
         /// 刪除指定ID的Member資料
         /// </summary>
         public Task DeleteMember(Guid id);
+
+        
+
+
+
+
     }
 }
