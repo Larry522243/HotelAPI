@@ -5,13 +5,7 @@ namespace HotelAPI.Dtos
     public class FacilitiesForUpdateDto
     {
        
-
-        /// <summary>
-        /// 設施名稱
-        /// </summary>
-        [Required]
-        [StringLength(50, ErrorMessage = "Maximum 50 characters")]
-        public string? FName { get; set; }
+       
 
         /// <summary>
         /// 開放時間
@@ -25,5 +19,7 @@ namespace HotelAPI.Dtos
         /// </summary>
         [Required]
         public int FPeople { get; set; }
+
+
     }
 }

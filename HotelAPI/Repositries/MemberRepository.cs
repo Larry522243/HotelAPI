@@ -127,5 +127,51 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
             }
         }
+
+        /// <summary>
+        ///查詢指定Order的Mid 所在Member資料(訂單找會員)
+        /// </summary>
+        public async Task<Member> GetMemberByOrderMId(Guid mid)
+        {
+            // 設定要被呼叫的stored procedure 名稱
+            var procedureName = "ShowMemberForProvidedOrderId"; 
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", mid, DbType.Guid, ParameterDirection.Input); 
+            using (var connection = new SqlConnection(_connectString)) 
+            { 
+                var company = await connection.QueryFirstOrDefaultAsync<Member>
+                    (procedureName, parameters, commandType: CommandType.StoredProcedure); 
+                return company; 
+            }
+        }
+
+        /// <summary>
+        /// 查詢指定Member所屬的所有Order資料
+        /// </summary>
+        public async Task<Member> GetMemberOrderMultipleResults(Guid mid)
+        { 
+            var query = "SELECT * FROM Member WHERE MId = @Id;" +
+                "SELECT * FROM Order WHERE MemberId = @Id"; 
+            using (var connection = new SqlConnection(_connectString))
+            using (var multi = await connection.QueryMultipleAsync(query, new { mid })) 
+            { 
+                var Member = await multi.ReadSingleOrDefaultAsync<Member>(); 
+                if (Member != null)
+                    Member.Orders = (await multi.ReadAsync<Order>()).ToList(); 
+                return Member;
+            }
+        }
+        //
+
+
+
+
+
+
     }
+
+
+
 }
+
+
