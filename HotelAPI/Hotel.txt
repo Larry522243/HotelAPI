@@ -72,10 +72,18 @@ ALTER DATABASE [DatabaseName] COLLATE Chinese_Taiwan_Stroke_CI_AS
 ALTER DATABASE [DatabaseName] SET MULTI_USER WITH ROLLBACK IMMEDIATE
 
 -----------------------------------------------------------------------
-新增Date資料進去資料庫時，使用'YYYYMMDD' 或 'YYYY-MM-DD'
+新增Date資料進去資料庫時，務必使用'YYYY-MM-DD'
 -----------------------------------------------------------------------
 
 
 查詢客人是否為會員
 身分證後四碼
 電話
+
+-----------------------------------------------------------------------
+CREATE PROCEDURE [dbo].[ShowMemberForProvidedOrderId] @Id uniqueidentifier
+AS
+SELECT m.MId, m.FirstName, m.LastName, m.Country, m.City
+FROM Members m JOIN Orders o ON m.MId = o.MId
+Where o.OId = @Id
+-----------------------------------------------------------------------

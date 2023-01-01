@@ -45,8 +45,10 @@ namespace HotelAPI.Repositries
         /// </summary>
         public async Task<Member> CreateMember(MemberForCreationDto member)
         {
-            string sqlQuery = "INSERT INTO Members (FirstName, LastName, Gender, Birth, Phone, Email, Password, IDNum, Country, City) VALUES (@FirstName, @LastName, @Gender, @Birth, @Phone, @Email, @Password, @IDNum, @Country, @City)";
+            string sqlQuery = "INSERT INTO Members (MId, FirstName, LastName, Gender, Birth, Phone, Email, Password, IDNum, Country, City) VALUES (@MId, @FirstName, @LastName, @Gender, @Birth, @Phone, @Email, @Password, @IDNum, @Country, @City)";
             var parameters = new DynamicParameters();
+            Guid MId = Guid.NewGuid();
+            parameters.Add("MId", MId, DbType.Guid);
             parameters.Add("FirstName", member.FirstName, DbType.String);
             parameters.Add("LastName", member.LastName, DbType.String);
             parameters.Add("Gender", member.Gender, DbType.String);
@@ -63,6 +65,7 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var createdMember = new Member
                 {
+                    MId = MId,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
                     Gender = member.Gender,
@@ -81,9 +84,9 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 修改指定ID的Member資料
         /// </summary>
-        public async Task<Member> UpdateMember(Guid mid, MemberForUpdateDto member)
+        public async Task<Member> UpdateMember(Guid id, MemberForUpdateDto member)
         {
-            var sqlQuery = "UPDATE Members SET FirstName = @FirstName, LastName = @LastName, Gender = @Gender, Birth = @Birth, Phone = @Phone, Email = @Email, Password = @Password, Country = @Country, City = @City WHERE MId = @mid";
+            var sqlQuery = "UPDATE Members SET FirstName = @FirstName, LastName = @LastName, Gender = @Gender, Birth = @Birth, Phone = @Phone, Password = @Password, Country = @Country, City = @City WHERE MId = @mid";
             var parameters = new DynamicParameters();
             parameters.Add("FirstName", member.FirstName, DbType.String);
             parameters.Add("LastName", member.LastName, DbType.String);
@@ -93,7 +96,7 @@ namespace HotelAPI.Repositries
             parameters.Add("Password", member.Password, DbType.String);
             parameters.Add("Country", member.Country, DbType.String);
             parameters.Add("City", member.City, DbType.String);
-            parameters.Add("MId", mid, DbType.Guid);
+            parameters.Add("MId", id, DbType.Guid);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -120,7 +123,7 @@ namespace HotelAPI.Repositries
         {
             var sqlQuery = "DELETE FROM Members WHERE MId = @mid";
             var parameters = new DynamicParameters();
-            parameters.Add("mid", mid, DbType.String);
+            parameters.Add("mid", mid, DbType.Guid);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -137,7 +140,7 @@ namespace HotelAPI.Repositries
             var procedureName = "ShowMemberForProvidedOrderId"; 
             var parameters = new DynamicParameters();
             parameters.Add("Id", mid, DbType.Guid, ParameterDirection.Input); 
-            using (var connection = new SqlConnection(_connectString)) 
+            using (var connection = new SqlConnection(_connectionString)) 
             { 
                 var company = await connection.QueryFirstOrDefaultAsync<Member>
                     (procedureName, parameters, commandType: CommandType.StoredProcedure); 
@@ -150,10 +153,12 @@ namespace HotelAPI.Repositries
         /// </summary>
         public async Task<Member> GetMemberOrderMultipleResults(Guid mid)
         { 
-            var query = "SELECT * FROM Member WHERE MId = @Id;" +
-                "SELECT * FROM Order WHERE MemberId = @Id"; 
-            using (var connection = new SqlConnection(_connectString))
-            using (var multi = await connection.QueryMultipleAsync(query, new { mid })) 
+            var sqlQuery = "SELECT * FROM Members WHERE MId = @Id;" +
+                "SELECT * FROM Orders WHERE MId = @Id";
+            var parameters = new DynamicParameters();
+            parameters.Add("Id", mid, DbType.Guid);
+            using (var connection = new SqlConnection(_connectionString))
+            using (var multi = await connection.QueryMultipleAsync(sqlQuery, parameters)) 
             { 
                 var Member = await multi.ReadSingleOrDefaultAsync<Member>(); 
                 if (Member != null)
@@ -161,17 +166,7 @@ namespace HotelAPI.Repositries
                 return Member;
             }
         }
-        //
-
-
-
-
-
-
     }
-
-
-
 }
 
 

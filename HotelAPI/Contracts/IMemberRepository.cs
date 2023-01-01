@@ -25,12 +25,5 @@ namespace HotelAPI.Contracts
 
         // 查詢指定Member所屬的所有Order資料
         public Task<Member> GetMemberOrderMultipleResults(Guid mid);
-
-        // 查詢所有的Member，以及它底下的所有Order資料
-        public Task<List<Member>> GetMembersOrdersMultipleMapping();
-
-        // 批次新增多筆Members資料
-        public Task CreateMultipleMembers(List<MemberForCreationDto> Members);
-
     }
 }
