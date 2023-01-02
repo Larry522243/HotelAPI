@@ -87,3 +87,7 @@ SELECT m.MId, m.FirstName, m.LastName, m.Country, m.City
 FROM Members m JOIN Orders o ON m.MId = o.MId
 Where o.OId = @Id
 -----------------------------------------------------------------------
+RoomRepository的DbType我是參考 https://learn.microsoft.com/zh-tw/dotnet/api/system.data.dbtype?view=net-7.0
+然後RId因為不是Guid的關係所以我不會改，我怕隨便用[顯示可能的修正]會出事。
+stored procedure還沒加，在幫我看看RoomRepository，還有查詢Room的空房間還沒做
+

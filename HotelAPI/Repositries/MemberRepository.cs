@@ -142,9 +142,9 @@ namespace HotelAPI.Repositries
             parameters.Add("Id", mid, DbType.Guid, ParameterDirection.Input); 
             using (var connection = new SqlConnection(_connectionString)) 
             { 
-                var company = await connection.QueryFirstOrDefaultAsync<Member>
+                var member = await connection.QueryFirstOrDefaultAsync<Member>
                     (procedureName, parameters, commandType: CommandType.StoredProcedure); 
-                return company; 
+                return member; 
             }
         }
 
