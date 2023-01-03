@@ -18,6 +18,6 @@ namespace HotelAPI.Contracts
         public Task<Room> UpdateRoom(String rid, RoomForUpdateDto room);
 
         //刪除指定ID的Room資料
-        public Task DeleteRoom(String rid);
+        public Task DeleteRoom(String ridd);
     }
 }
