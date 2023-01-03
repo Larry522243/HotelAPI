@@ -16,8 +16,5 @@ namespace HotelAPI.Contracts
 
         //修改指定ID的Facility資料
         public Task<Facility> UpdateFacility(Guid Fid, FacilitiesForUpdateDto Facility);
-
-        // 批次新增多筆Facilities資料
-        public Task CreateMultipleFacilities(List<FacilitiesForCreationDto> Facilities);
     }
 }

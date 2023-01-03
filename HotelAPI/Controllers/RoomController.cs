@@ -45,7 +45,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetRoom(Guid id)
+        public async Task<IActionResult> GetRoom(String id)
         {
             try
             {
@@ -78,7 +78,7 @@ namespace HotelAPI.Controllers
                 {
                     Success = true,
                     Message = "Room Created.",
-                    createdRoom
+                    createdRoom,
                 });
             }
             catch (Exception ex)
@@ -92,7 +92,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateRoom(Guid id, RoomForUpdateDto room)
+        public async Task<IActionResult> UpdateRoom(String id, RoomForUpdateDto room)
         {
             try
             {
@@ -104,6 +104,7 @@ namespace HotelAPI.Controllers
                 {
                     Success = true,
                     Message = "Room Updated.",
+                    room,
                 });
             }
             catch (Exception ex)
@@ -117,7 +118,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpDelete]
         [Route("{id}")]
-        public async Task<IActionResult> DeleteRoom(Guid id)
+        public async Task<IActionResult> DeleteRoom(String id)
         {
             try
             {
@@ -136,56 +137,5 @@ namespace HotelAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
-
-        /// <summary>
-        ///查詢指定OrderDetails的Rid 所在Room資料(訂單明細找房間)
-        /// </summary>
-        [HttpGet]
-        [Route("ByOrderDetailsId/{id}")]
-        public async Task<IActionResult> GetRoomByOrderDetailsRId(Guid id)
-        {
-            try
-            {
-                var room = await _roomRepo.GetRoomByOrderDetailsRId(id);
-                if (room == null)
-                    return NotFound();
-                return Ok(new
-                {
-                    Success = true,
-                    room
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-        [HttpGet]
-        [Route("{id}/MutipleOrderDetailsResults")]
-        /// <summary>
-        /// 查詢指定OrderDetails所屬的所有Room資料
-        /// </summary>
-        public async Task<IActionResult> GetRoomOrderDetailsMultipleResults(Guid id)
-        {
-            try
-            {
-                var orderdetails = await _roomRepo.GetRoomOrderDetailsMultipleResults(id);
-                if (orderdetails == null)
-                    return NotFound();
-                return Ok(new
-                {
-                    Success = true,
-                    Message = "Orders Finded.",
-                    orderdetails
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
-
-
     }
 }

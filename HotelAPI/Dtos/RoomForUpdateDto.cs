@@ -45,7 +45,6 @@ namespace HotelAPI.Dtos
         /// <summary>
         /// 備註
         /// </summary>
-        [Required]
         [StringLength(200, ErrorMessage = "Maximum 200 characters")]
         public string? RMark { get; set; }
     }

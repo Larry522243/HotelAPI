@@ -21,9 +21,12 @@ namespace HotelAPI.Contracts
         public Task DeleteMember(Guid mid);
 
         //查詢指定Order的Mid 所在Member資料(訂單找會員)
-        public Task<Member> GetMemberByOrderMId(Guid mid);
+        public Task<Member> GetMemberByOrderMId(String oid);
 
         // 查詢指定Member所屬的所有Order資料
         public Task<Member> GetMemberOrderMultipleResults(Guid mid);
+
+        //利用身分證後四碼及生日查詢會員資料
+        public Task<Member> GetMemberByIDNumAndBirth(String partIDNum, String date);
     }
 }

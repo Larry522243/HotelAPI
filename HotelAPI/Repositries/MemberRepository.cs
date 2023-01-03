@@ -52,7 +52,7 @@ namespace HotelAPI.Repositries
             parameters.Add("FirstName", member.FirstName, DbType.String);
             parameters.Add("LastName", member.LastName, DbType.String);
             parameters.Add("Gender", member.Gender, DbType.String);
-            parameters.Add("Birth", member.Birth, DbType.DateTime);
+            parameters.Add("Birth", member.Birth, DbType.Date);
             parameters.Add("Phone", member.Phone, DbType.String);
             parameters.Add("Email", member.Email, DbType.String);
             parameters.Add("Password", member.Password, DbType.String);
@@ -69,6 +69,7 @@ namespace HotelAPI.Repositries
                     FirstName = member.FirstName,
                     LastName = member.LastName,
                     Gender = member.Gender,
+                    Birth = member.Birth,
                     Phone = member.Phone,
                     Email = member.Email,
                     Password = member.Password,
@@ -134,12 +135,12 @@ namespace HotelAPI.Repositries
         /// <summary>
         ///查詢指定Order的Mid 所在Member資料(訂單找會員)
         /// </summary>
-        public async Task<Member> GetMemberByOrderMId(Guid mid)
+        public async Task<Member> GetMemberByOrderMId(String oid)
         {
             // 設定要被呼叫的stored procedure 名稱
             var procedureName = "ShowMemberForProvidedOrderId"; 
             var parameters = new DynamicParameters();
-            parameters.Add("Id", mid, DbType.Guid, ParameterDirection.Input); 
+            parameters.Add("Id", oid, DbType.String, ParameterDirection.Input); 
             using (var connection = new SqlConnection(_connectionString)) 
             { 
                 var member = await connection.QueryFirstOrDefaultAsync<Member>
@@ -157,7 +158,7 @@ namespace HotelAPI.Repositries
                 "SELECT * FROM Orders WHERE MId = @Id";
             var parameters = new DynamicParameters();
             parameters.Add("Id", mid, DbType.Guid);
-            using (var connection = new SqlConnection(_connectionString))
+            using (var connection = new SqlConnection(_connectionString)) 
             using (var multi = await connection.QueryMultipleAsync(sqlQuery, parameters)) 
             { 
                 var Member = await multi.ReadSingleOrDefaultAsync<Member>(); 
@@ -165,6 +166,24 @@ namespace HotelAPI.Repositries
                     Member.Orders = (await multi.ReadAsync<Order>()).ToList(); 
                 return Member;
             }
+        }
+
+        /// <summary>
+        /// 利用身分證後四碼及生日查詢會員資料
+        /// </summary>
+        public async Task<Member> GetMemberByIDNumAndBirth(String partIDNum, String date)
+        {
+            string sqlQuery = String.Format("SELECT * FROM Members WHERE IDNum LIKE '______{0}' AND Birth = '{1}'", partIDNum, date);
+            // var parameters = new DynamicParameters();
+            // parameters.Add("partIDNum", partIDNum, DbType.String);
+            // parameters.Add("date", date, DbType.String);
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var member = await connection.QuerySingleOrDefaultAsync<Member>(sqlQuery);
+                return member;
+            }
+
+
         }
     }
 }

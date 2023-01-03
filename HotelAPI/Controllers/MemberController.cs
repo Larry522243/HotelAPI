@@ -78,7 +78,7 @@ namespace HotelAPI.Controllers
                 {
                     Success = true,
                     Message = "Member Created.",
-                    createdMember
+                    createdMember,
                 });
             }
             catch (Exception ex)
@@ -104,6 +104,7 @@ namespace HotelAPI.Controllers
                 {
                     Success = true,
                     Message = "Member Updated.",
+                    member,
                 });
             }
             catch (Exception ex)
@@ -142,7 +143,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpGet]
         [Route("ByOrderId/{id}")]
-        public async Task<IActionResult> GetMemberByOrderMId(Guid id)
+        public async Task<IActionResult> GetMemberByOrderMId(String id)
         {
             try
             {
@@ -178,6 +179,31 @@ namespace HotelAPI.Controllers
                     Success = true,
                     Message = "Orders Finded.",
                     orders
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{partIDNum}&{date}")]
+        /// <summary>
+        /// 利用身分證後四碼及生日查詢會員資料
+        /// </summary>
+        public async Task<IActionResult> GetMemberByIDNumAndBirth(String partIDNum, String date)
+        {
+            try
+            {
+                var member = await _memberRepo.GetMemberByIDNumAndBirth(partIDNum, date);
+                if (member == null) 
+                    return NotFound();
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "member fetched.",
+                    member
                 });
             }
             catch (Exception ex)
