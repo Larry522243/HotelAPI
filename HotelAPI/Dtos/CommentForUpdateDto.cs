@@ -9,7 +9,7 @@ namespace HotelAPI.Dtos
         /// 評論建立日期
         /// </summary>
         [Required]
-        public DateTime CreatedDate { get; set; }
+        public DateTime CreateDate { get; set; }
 
         /// <summary>
         /// 評論星數

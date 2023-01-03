@@ -92,5 +92,6 @@ RoomRepository的DbType我是參考 https://learn.microsoft.com/zh-tw/dotnet/api/syst
 stored procedure還沒加，在幫我看看RoomRepository，還有查詢Room的空房間還沒做
 (已解決)
 -----------------------------------------------------------------------
-
+CommentRepository最後一個sql語法不太懂怎麼改 
+剩下comment的controller未完成
 

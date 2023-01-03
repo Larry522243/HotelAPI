@@ -26,12 +26,12 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var rooms = await _facilityRepo.GetFacilities();
+                var facilities = await _facilityRepo.GetFacilities();
                 return Ok(new
                 {
                     Success = true,
                     Message = "All facilities returned.",
-                    rooms
+                    facilities
                 });
             }
             catch (Exception ex)

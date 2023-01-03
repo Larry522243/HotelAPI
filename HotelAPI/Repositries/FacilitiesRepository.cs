@@ -14,7 +14,7 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 查詢所有設施資料
         /// </summary>
-        public async Task<IEnumerable<Facility>> Getfacilities()
+        public async Task<IEnumerable<Facility>> GetFacilities()
         {
             string sqlQuery = "SELECT * FROM Facilities";
             using (var connection = new SqlConnection(_connectionString))
@@ -45,7 +45,7 @@ namespace HotelAPI.Repositries
         /// </summary>
         public async Task<Facility> CreateFacility(FacilitiesForCreationDto facility)
         {
-            string sqlQuery = "INSERT INTO Rooms (FId, FName, FFloor, FTime, FPeople) VALUES (@FId, @FName, @FFloor, @FTime, @FPeople)";
+            string sqlQuery = "INSERT INTO Facilities (FId, FName, FFloor, FTime, FPeople) VALUES (@FId, @FName, @FFloor, @FTime, @FPeople)";
             var parameters = new DynamicParameters();
             parameters.Add("FId", facility.FId, DbType.Int16);
             parameters.Add("FName", facility.FName, DbType.String);
@@ -74,11 +74,11 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 修改指定ID的Facility資料(注意Dto修改的地方&注意Int16 fid)
         /// </summary>
-        public async Task<Facility> UpdateRoom(Int16 fid, FacilitiesForUpdateDto facility)
+        public async Task<Facility> UpdateFacility(Int16 fid, FacilitiesForUpdateDto facility)
         {
-            var sqlQuery = "UPDATE Facilities SET FId = @FId, FTime = @FTime, FPeople = @FPeople WHERE FId = @FId";
+            var sqlQuery = "UPDATE Facilities SET  FTime = @FTime, FPeople = @FPeople WHERE FId = @FId";
             var parameters = new DynamicParameters();
-            parameters.Add("FId", fid, DbType.Int16);
+            //parameters.Add("FId", fid, DbType.Int16);
             parameters.Add("FTime", facility.FTime, DbType.String);
             parameters.Add("FPeople", facility.FPeople, DbType.Int16);
 
@@ -87,7 +87,7 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var updatedFacility = new Facility
                 {
-                    FId = fid,
+                    //FId = fid,
                     FTime = facility.FTime,
                     FPeople = facility.FPeople,
                 };
