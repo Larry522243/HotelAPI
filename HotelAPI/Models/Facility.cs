@@ -38,6 +38,6 @@ namespace HotelAPI.Models
         /// 公共設施開放人數
         /// </summary>
         [Required]
-        public int FProple { get; set; }
+        public int FPeople { get; set; }
     }
 }

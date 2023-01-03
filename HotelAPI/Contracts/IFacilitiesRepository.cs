@@ -9,12 +9,12 @@ namespace HotelAPI.Contracts
         public Task<IEnumerable<Facility>> GetFacilities();
 
         //查詢指定ID的單一設施資料
-        public Task<Facility> GetFacility(Guid Fid);
+        public Task<Facility> GetFacility(Int16 Fid);
 
         //新增Facility資料
         public Task<Facility> CreateFacility(FacilitiesForCreationDto Facility);
 
         //修改指定ID的Facility資料
-        public Task<Facility> UpdateFacility(Guid Fid, FacilitiesForUpdateDto Facility);
+        public Task<Facility> UpdateFacility(Int16 Fid, FacilitiesForUpdateDto Facility);
     }
 }

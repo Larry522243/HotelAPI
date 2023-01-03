@@ -12,6 +12,8 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMemberRepository,MemberRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
+builder.Services.AddScoped<IFacilitiesRepository, FacilitiesRepository>();
+
 
 var app = builder.Build();
 
