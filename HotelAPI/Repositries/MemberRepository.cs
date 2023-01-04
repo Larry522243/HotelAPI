@@ -184,6 +184,22 @@ namespace HotelAPI.Repositries
                 return member;
             }
         }
+
+        ///<summary>
+        ///利用電子郵件帳號及帳號查詢會員資料(登入)
+        ///</summary>
+        //public async Task<Member> Login(Member test)
+        //{
+        //    var sqlQuery = "SELECT * FROM Memebrs WHERE Email = @Email AND Password = @Pwd";
+        //    var parameters = new DynamicParameters();
+        //    parameters.Add("Email", test.Email, DbType.String);
+        //    parameters.Add("Pwd", test.Password, DbType.String);
+        //    using (var connection = new SqlConnection(_connectionString))
+        //    {
+        //        var member = await connection.QueryFirstOrDefaultAsync<Member>(sqlQuery, parameters);
+        //        return member;
+        //    }
+        //}
     }
 }
 

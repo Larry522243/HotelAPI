@@ -211,5 +211,30 @@ namespace HotelAPI.Controllers
                 return StatusCode(500, ex.Message);
             }
         }
+
+        ///<summary>
+        ///利用電子郵件帳號及帳號查詢會員資料(登入)
+        ///</summary>
+        //[HttpGet]
+        //[Route("Login")]
+        //public async Task<IActionResult> Login(Member test)
+        //{
+        //    try
+        //    {
+        //        var member = await _memberRepo.Login(test);
+        //        if (member == null)
+        //            return NotFound();
+        //        return Ok(new
+        //        {
+        //            Success = true,
+        //            Message = "Login Suceessful.",
+        //            member,
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
     }
 }

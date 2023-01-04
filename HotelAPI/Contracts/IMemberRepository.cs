@@ -28,5 +28,8 @@ namespace HotelAPI.Contracts
 
         //利用身分證後四碼及生日查詢會員資料
         public Task<Member> GetMemberByIDNumAndBirth(String partIDNum, String date);
+
+        //利用電子郵件帳號及帳號查詢會員資料(登入)
+        //public Task<Member> Login(Member member);
     }
 }

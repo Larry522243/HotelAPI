@@ -24,6 +24,6 @@ namespace HotelAPI.Contracts
         public Task<Comment> GetCommentByMemberMId(Guid Mid);
 
         // 查詢所有的Comments，以及它底下的所有Members資料
-        public Task<List<Comment>> GetCommentsMembersMultipleMapping();
+        //public Task<List<Comment>> GetCommentsMembersMultipleMapping();
     }
 }

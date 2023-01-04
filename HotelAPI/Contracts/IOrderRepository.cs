@@ -9,7 +9,7 @@ namespace HotelAPI.Contracts
         public Task<IEnumerable<Order>> GetOrders();
 
         //查詢指定ID的訂單資料
-        public Task<Order> GetOrderById(String oid);
+        public Task<Order> GetOrder(String oid);
 
         //新增Order資料
         public Task<Order> CreateOrder(OrderForCreationDto order);

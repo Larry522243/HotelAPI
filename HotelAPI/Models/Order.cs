@@ -49,5 +49,10 @@ namespace HotelAPI.Models
         /// </summary>
         [Required]
         public int OPeopleCnt { get; set; }
+
+        /// <summary>
+        /// 訂單細節
+        /// </summary>
+        public List<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

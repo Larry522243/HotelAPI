@@ -10,12 +10,12 @@ namespace HotelAPI.Controllers
     public class CommentController : ControllerBase
     {
         private readonly ILogger<CommentController> _logger;
-        private readonly ICommentRepository _facilityRepo;
+        private readonly ICommentRepository _commentRepo;
 
-        public CommentController(ILogger<CommentController> logger, ICommentRepository facilityRepo)
+        public CommentController(ILogger<CommentController> logger, ICommentRepository commentRepo)
         {
             _logger = logger;
-            _facilityRepo = facilityRepo;
+            _commentRepo = commentRepo;
         }
 
         /// <summary>
@@ -26,7 +26,7 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var comments = await _facilityRepo.GetComments();
+                var comments = await _commentRepo.GetComments();
                 return Ok(new
                 {
                     Success = true,
@@ -49,7 +49,7 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var comment = await _facilityRepo.GetComment(id);
+                var comment = await _commentRepo.GetComment(id);
                 if (comment == null)
                     return NotFound();
                 return Ok(new
@@ -73,7 +73,7 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var createComment = await _facilityRepo.CreateComment(comment);
+                var createComment = await _commentRepo.CreateComment(comment);
                 return Ok(new
                 {
                     Success = true,
@@ -97,10 +97,10 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var dbComment = await _facilityRepo.GetComment(id);
+                var dbComment = await _commentRepo.GetComment(id);
                 if (dbComment == null)
                     return NotFound();
-                await _facilityRepo.UpdateComment(id, comment);
+                await _commentRepo.UpdateComment(id, comment);
                 return Ok(new
                 {
                     Success = true,
@@ -123,10 +123,10 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var dbComment = await _facilityRepo.GetComment(id);
+                var dbComment = await _commentRepo.GetComment(id);
                 if (dbComment == null)
                     return NotFound();
-                await _facilityRepo.DeleteComment(id);
+                await _commentRepo.DeleteComment(id);
                 return Ok(new
                 {
                     Success = true,
@@ -148,7 +148,7 @@ namespace HotelAPI.Controllers
         {
             try
             {
-                var comment = await _facilityRepo.GetCommentByMemberMId(id);
+                var comment = await _commentRepo.GetCommentByMemberMId(id);
                 return Ok(new
                 {
                     Success = true,
@@ -165,23 +165,23 @@ namespace HotelAPI.Controllers
         /// <summary>
         ///查詢所有的Comments，以及它底下的所有Members資料
         /// </summary>
-        [HttpGet]
-        [Route("mutiple")]
-        public async Task<IActionResult> GetCommentsMembersMultipleMapping()
-        {
-            try
-            {
-                var comment = await _facilityRepo.GetCommentsMembersMultipleMapping();
-                return Ok(new
-                {
-                    Success = true,
-                    comment,
-                });
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, ex.Message);
-            }
-        }
+        //[HttpGet]
+        //[Route("mutiple")]
+        //public async Task<IActionResult> GetCommentsMembersMultipleMapping()
+        //{
+        //    try
+        //    {
+        //        var comment = await _facilityRepo.GetCommentsMembersMultipleMapping();
+        //        return Ok(new
+        //        {
+        //            Success = true,
+        //            comment,
+        //        });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return StatusCode(500, ex.Message);
+        //    }
+        //}
     }
 }
