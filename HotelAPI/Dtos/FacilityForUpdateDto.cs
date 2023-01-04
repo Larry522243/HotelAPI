@@ -2,14 +2,8 @@
 
 namespace HotelAPI.Dtos
 {
-    public class FacilitiesForCreationDto
+    public class FacilityForUpdateDto
     {
-        /// <summary>
-        /// 設施編號
-        /// </summary>
-        [Required]
-        public int FId { get; set; }
-
         /// <summary>
         /// 設施名稱
         /// </summary>
@@ -36,7 +30,5 @@ namespace HotelAPI.Dtos
         /// </summary>
         [Required]
         public int FPeople { get; set; }
-
-
     }
 }

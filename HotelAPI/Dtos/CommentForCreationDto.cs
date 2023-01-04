@@ -5,12 +5,6 @@ namespace HotelAPI.Dtos
     public class CommentForCreationDto
     {
         /// <summary>
-        /// 評論編號
-        /// </summary>
-        [Required]
-        public int CId { get; set; }
-
-        /// <summary>
         /// 會員編號
         /// </summary>
         [Required]

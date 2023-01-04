@@ -37,5 +37,7 @@ namespace HotelAPI.Models
         [Required]
         [StringLength(1000, ErrorMessage = "Maximum 1000 characters")]
         public string? Content { get; set; }
+
+        public List<Member> Members { get; set; } = new List<Member>();
     }
 }

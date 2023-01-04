@@ -10,9 +10,9 @@ namespace HotelAPI.Controllers
     public class FacilityController : ControllerBase
     {
         private readonly ILogger<FacilityController> _logger;
-        private readonly IFacilitiesRepository _facilityRepo;
+        private readonly IFacilityRepository _facilityRepo;
 
-        public FacilityController(ILogger<FacilityController> logger, IFacilitiesRepository facilityRepo)
+        public FacilityController(ILogger<FacilityController> logger, IFacilityRepository facilityRepo)
         {
             _logger = logger;
             _facilityRepo = facilityRepo;
@@ -69,7 +69,7 @@ namespace HotelAPI.Controllers
         /// 新增Facility資料
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> CreateFacility(FacilitiesForCreationDto facility)
+        public async Task<IActionResult> CreateFacility(FacilityForCreationDto facility)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateFacility(Int16 id, FacilitiesForUpdateDto facility)
+        public async Task<IActionResult> UpdateFacility(Int16 id, FacilityForUpdateDto facility)
         {
             try
             {

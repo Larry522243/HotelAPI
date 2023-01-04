@@ -7,7 +7,7 @@ using System.Data;
 
 namespace HotelAPI.Repositries
 {
-    public class OrderDetailsRepository
+    public class OrderDetailRepository
     {
     }
 }

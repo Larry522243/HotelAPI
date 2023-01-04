@@ -7,7 +7,7 @@ using System.Data;
 
 namespace HotelAPI.Repositries
 {
-    public class FacilitiesRepository : IFacilitiesRepository
+    public class FacilityRepository : IFacilityRepository
     {
         private readonly string _connectionString = DBUtil.ConnectionString();
 
@@ -25,9 +25,9 @@ namespace HotelAPI.Repositries
         }
 
         /// <summary>
-        /// 查詢指定ID的單一設施資料(注意Int16 fid)
+        /// 查詢指定ID的單一設施資料
         /// </summary>
-        public async Task<Facility> GetFacility(Int16 fid)
+        public async Task<Facility> GetFacility(int fid)
         {
             string sqlQuery = "SELECT * FROM Facilities WHERE FId = @fid";
             var parameters = new DynamicParameters();
@@ -43,11 +43,10 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 新增Facility資料
         /// </summary>
-        public async Task<Facility> CreateFacility(FacilitiesForCreationDto facility)
+        public async Task<Facility> CreateFacility(FacilityForCreationDto facility)
         {
-            string sqlQuery = "INSERT INTO Facilities (FId, FName, FFloor, FTime, FPeople) VALUES (@FId, @FName, @FFloor, @FTime, @FPeople)";
+            string sqlQuery = "INSERT INTO Facilities (FName, FFloor, FTime, FPeople) VALUES (@FName, @FFloor, @FTime, @FPeople)";
             var parameters = new DynamicParameters();
-            parameters.Add("FId", facility.FId, DbType.Int16);
             parameters.Add("FName", facility.FName, DbType.String);
             parameters.Add("FFloor", facility.FFloor, DbType.String);
             parameters.Add("FTime", facility.FTime, DbType.String);
@@ -59,7 +58,6 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var createdFacility = new Facility
                 {
-                    FId = facility.FId,
                     FName = facility.FName,
                     FFloor = facility.FFloor,
                     FTime = facility.FTime,
@@ -72,13 +70,15 @@ namespace HotelAPI.Repositries
         }
 
         /// <summary>
-        /// 修改指定ID的Facility資料(注意Dto修改的地方&注意Int16 fid)
+        /// 修改指定ID的Facility資料
         /// </summary>
-        public async Task<Facility> UpdateFacility(Int16 fid, FacilitiesForUpdateDto facility)
+        public async Task<Facility> UpdateFacility(int fid, FacilityForUpdateDto facility)
         {
-            var sqlQuery = "UPDATE Facilities SET  FTime = @FTime, FPeople = @FPeople WHERE FId = @FId";
+            var sqlQuery = "UPDATE Facilities SET FName = @FName,FFloor = @FFloor, FTime = @FTime, FPeople = @FPeople WHERE FId = @FId";
             var parameters = new DynamicParameters();
-            //parameters.Add("FId", fid, DbType.Int16);
+            parameters.Add("FId", fid, DbType.Int16);
+            parameters.Add("FName", facility.FName, DbType.String);
+            parameters.Add("FFloor", facility.FFloor, DbType.Int16);
             parameters.Add("FTime", facility.FTime, DbType.String);
             parameters.Add("FPeople", facility.FPeople, DbType.Int16);
 
@@ -87,13 +87,12 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var updatedFacility = new Facility
                 {
-                    //FId = fid,
+                    FId = fid,
                     FTime = facility.FTime,
                     FPeople = facility.FPeople,
                 };
                 return updatedFacility;
             }
         }
-
     }
 }

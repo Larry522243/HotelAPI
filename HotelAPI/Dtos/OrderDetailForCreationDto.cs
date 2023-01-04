@@ -3,7 +3,7 @@
 
 namespace HotelAPI.Dtos
 {
-    public class OrderDetailsForUpdateDto
+    public class OrderDetailForCreationDto
     {
 
         /// <summary>

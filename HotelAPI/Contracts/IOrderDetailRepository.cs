@@ -3,7 +3,7 @@ using HotelAPI.Models;
 
 namespace HotelAPI.Contracts
 {
-    public interface IOrderDetailsRepository
+    public interface IOrderDetailRepository
     {
     }
 }

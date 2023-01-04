@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HotelAPI.Controllers
 {
-    public class OrderDetailsController
+    public class OrderDetailController
     {
     }
 }

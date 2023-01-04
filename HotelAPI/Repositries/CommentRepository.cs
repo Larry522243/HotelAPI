@@ -4,7 +4,6 @@ using HotelAPI.Models;
 using Microsoft.Data.SqlClient;
 using Dapper;
 using System.Data;
-using System.Xml.Linq;
 
 namespace HotelAPI.Repositries
 {
@@ -28,11 +27,11 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 查詢指定ID的單一評論資料
         /// </summary>
-        public async Task<Comment> GetComment(Int16 cid)
+        public async Task<Comment> GetComment(int cid)
         {
             string sqlQuery = "SELECT * FROM Comments WHERE CId = @cid";
             var parameters = new DynamicParameters();
-            parameters.Add("cid", cid, DbType.Int16);
+            parameters.Add("cid", cid, DbType.Int64);
 
             using (var connection = new SqlConnection(_connectionString))
             {
@@ -46,10 +45,9 @@ namespace HotelAPI.Repositries
         /// </summary>
         public async Task<Comment> CreateComment(CommentForCreationDto comment)
         {
-            string sqlQuery = "INSERT INTO Comments (CId, MId, CreateDate, Star, Content) VALUES (@CId, @MId, @CreateDate, @Star, @Content)";
+            string sqlQuery = "INSERT INTO Comments (MId, CreateDate, Star, Content) VALUES (@MId, @CreateDate, @Star, @Content)";
             var parameters = new DynamicParameters();
-            parameters.Add("CId", comment.CId, DbType.Int16);
-            parameters.Add("MId", comment.MId, DbType.String);
+            parameters.Add("MId", comment.MId, DbType.Guid);
             parameters.Add("CreateDate", comment.CreateDate, DbType.DateTime);
             parameters.Add("Star", comment.Star, DbType.Int16);
             parameters.Add("Content", comment.Content, DbType.String);
@@ -60,7 +58,6 @@ namespace HotelAPI.Repositries
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var createdComment = new Comment
                 {
-                    CId = comment.CId,
                     MId = comment.MId,
                     CreateDate = comment.CreateDate,
                     Star = comment.Star,
@@ -75,10 +72,11 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 修改指定ID的Comment資料
         /// </summary>
-        public async Task<Comment> UpdateComment(Int16 cid, CommentForUpdateDto comment)
+        public async Task<Comment> UpdateComment(int cid, CommentForUpdateDto comment)
         {
             var sqlQuery = "UPDATE Comments SET CreateDate = @CreateDate, Star = @Star, Content = @Content WHERE CId = @CId";
             var parameters = new DynamicParameters();
+            parameters.Add("CId", cid, DbType.Int32);
             parameters.Add("CreateDate", comment.CreateDate, DbType.DateTime);
             parameters.Add("Star", comment.Star, DbType.Int16);
             parameters.Add("Content", comment.Content, DbType.String);
@@ -97,19 +95,32 @@ namespace HotelAPI.Repositries
         }
 
         /// <summary>
-        ///查詢指定Member的Mid 所在Comment資料
+        /// 刪除指定ID的Comment資料
         /// </summary>
-        public async Task<Comment> GetCommentByMemberMId(String mid)
+        public async Task DeleteComment(int cid)
         {
-            // 設定要被呼叫的stored procedure 名稱
-            var procedureName = "ShowCommentForProvidedMemberId";
+            var sqlQuery = "DELETE FROM Comments WHERE CId = @CId";
             var parameters = new DynamicParameters();
-            parameters.Add("Id", mid, DbType.Guid, ParameterDirection.Input);
+            parameters.Add("CId", cid, DbType.Int32);
+
             using (var connection = new SqlConnection(_connectionString))
             {
-                var comment = await connection.QueryFirstOrDefaultAsync<Comment>
-                    (procedureName, parameters, commandType: CommandType.StoredProcedure);
-                return comment;
+                await connection.QueryAsync(sqlQuery, parameters);
+            }
+        }
+        /// <summary>
+        ///查詢指定Member的Mid 所在Comment資料
+        /// </summary>
+        public async Task<Comment> GetCommentByMemberMId(Guid mid)
+        {
+            var sqlQuery = "SELECT c.CId, c.CreateDate, c.Star, c.Content FROM Comments c, Members m WHERE m.MId = @MId AND m.MId = c.MId";
+            var parameters = new DynamicParameters();
+            parameters.Add("MId", mid, DbType.Guid);
+
+            using(var connection = new SqlConnection(_connectionString))
+            {
+                var comment = await connection.QuerySingleOrDefaultAsync<Comment>(sqlQuery, parameters);
+                return comment; 
             }
         }
 
@@ -118,26 +129,24 @@ namespace HotelAPI.Repositries
         /// </summary>
         public async Task<List<Comment>> GetCommentsMembersMultipleMapping()
         {
-            var query = "SELECT * FROM Comments c JOIN Member m ON c.Id = m.CommentsId";
+            var query = "SELECT * FROM Comments c JOIN Members m ON c.MId = m.MId";
             using (var connection = new SqlConnection(_connectionString))
             {
-                var commentDict = new Dictionary<Int16, Comment>();
+                var commentDict = new Dictionary<int, Comment>();
                 var comments = await connection.QueryAsync<Comment, Member, Comment>(
                 query, (comment, member) =>
-                {
-                    if (!commentDict.TryGetValue(comment.Id, out var currentComment))
+                {  
+                    if (!commentDict.TryGetValue(comment.CId, out var currentComment))
                     {
                         currentComment = comment;
-                        commentDict.Add(currentComment.Id, currentComment);
+                        commentDict.Add(currentComment.CId, currentComment);
                     }
-                    currentComment.Employees.Add(member);
+                    currentComment.Members.Add(member);
                     return currentComment;
                 }
                 );
                 return comments.Distinct().ToList();
             }
         }
-
-
     }
 }

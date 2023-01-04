@@ -85,7 +85,7 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 修改指定ID的Member資料
         /// </summary>
-        public async Task<Member> UpdateMember(Guid id, MemberForUpdateDto member)
+        public async Task<Member> UpdateMember(Guid mid, MemberForUpdateDto member)
         {
             var sqlQuery = "UPDATE Members SET FirstName = @FirstName, LastName = @LastName, Gender = @Gender, Birth = @Birth, Phone = @Phone, Password = @Password, Country = @Country, City = @City WHERE MId = @mid";
             var parameters = new DynamicParameters();
@@ -97,13 +97,14 @@ namespace HotelAPI.Repositries
             parameters.Add("Password", member.Password, DbType.String);
             parameters.Add("Country", member.Country, DbType.String);
             parameters.Add("City", member.City, DbType.String);
-            parameters.Add("MId", id, DbType.Guid);
+            parameters.Add("MId", mid, DbType.Guid);
 
             using (var connection = new SqlConnection(_connectionString))
             {
                 await connection.ExecuteAsync(sqlQuery, parameters);
                 var updatedMember = new Member
                 {
+                    MId = mid,
                     FirstName = member.FirstName,
                     LastName = member.LastName,
                     Gender = member.Gender,
@@ -182,8 +183,6 @@ namespace HotelAPI.Repositries
                 var member = await connection.QuerySingleOrDefaultAsync<Member>(sqlQuery);
                 return member;
             }
-
-
         }
     }
 }
