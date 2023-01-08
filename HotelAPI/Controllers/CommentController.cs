@@ -165,23 +165,23 @@ namespace HotelAPI.Controllers
         /// <summary>
         ///查詢所有的Comments，以及它底下的所有Members資料
         /// </summary>
-        //[HttpGet]
-        //[Route("mutiple")]
-        //public async Task<IActionResult> GetCommentsMembersMultipleMapping()
-        //{
-        //    try
-        //    {
-        //        var comment = await _facilityRepo.GetCommentsMembersMultipleMapping();
-        //        return Ok(new
-        //        {
-        //            Success = true,
-        //            comment,
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
+        [HttpGet]
+        [Route("mutiple")]
+        public async Task<IActionResult> GetCommentsMembersMultipleMapping()
+        {
+            try
+            {
+                var comment = await _commentRepo.GetCommentsMembersMultipleMapping();
+                return Ok(new
+                {
+                    Success = true,
+                    comment,
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }

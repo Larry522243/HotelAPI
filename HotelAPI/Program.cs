@@ -14,6 +14,22 @@ builder.Services.AddScoped<IMemberRepository,MemberRepository>();
 builder.Services.AddScoped<IRoomRepository, RoomRepository>();
 builder.Services.AddScoped<IFacilityRepository, FacilityRepository>();
 builder.Services.AddScoped<ICommentRepository, CommentRepository>();
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+builder.Services.AddScoped<IOrderDetailRepository, OrderDetailRepository>();
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: "AllowAny",
+        policy =>
+        {
+            policy.WithOrigins("https://localhost:7247", "http://localhost:5427")
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod();
+                //.AllowCredentials();
+        });
+
+});
 
 
 var app = builder.Build();
@@ -30,5 +46,7 @@ app.UseHttpsRedirection();
 app.UseAuthorization();
 
 app.MapControllers();
+
+app.UseCors("AllowAny");
 
 app.Run();

@@ -24,10 +24,17 @@ namespace HotelAPI.Controllers
         /// 查詢所有訂單及明細資料
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetOrders() {
+        public async Task<IActionResult> GetOrders()
+        {
             try
             {
-
+                var orders = await _orderRepo.GetOrders();
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "all orders returned",
+                    orders,
+                });
             }
             catch (Exception ex)
             {

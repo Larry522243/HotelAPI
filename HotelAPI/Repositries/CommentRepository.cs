@@ -127,26 +127,26 @@ namespace HotelAPI.Repositries
         /// <summary>
         ///查詢所有的Comments，以及它底下的所有Members資料
         /// </summary>
-        //public async Task<List<Comment>> GetCommentsMembersMultipleMapping()
-        //{
-        //    var query = "SELECT * FROM Comments c JOIN Members m ON c.MId = m.MId";
-        //    using (var connection = new SqlConnection(_connectionString))
-        //    {
-        //        var commentDict = new Dictionary<int, Comment>();
-        //        var comments = await connection.QueryAsync<Comment, Member, Comment>(
-        //        query, (comment, member) =>
-        //        {  
-        //            if (!commentDict.TryGetValue(comment.CId, out var currentComment))
-        //            {
-        //                currentComment = comment;
-        //                commentDict.Add(currentComment.CId, currentComment);
-        //            }
-        //            currentComment.Members.Add(member);
-        //            return currentComment;
-        //        }
-        //        );
-        //        return comments.Distinct().ToList();
-        //    }
-        //}
+        public async Task<List<Comment>> GetCommentsMembersMultipleMapping()
+        {
+            var query = "SELECT * FROM Comments c JOIN Members m ON c.MId = m.MId";
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                var commentDict = new Dictionary<Guid, Comment>();
+                var comments = await connection.QueryAsync<Comment, Member, Comment>(
+                query, (comment, member) =>
+                {
+                    if (!commentDict.TryGetValue(comment.MId, out var currentComment))
+                    {
+                        currentComment = comment;
+                        commentDict.Add(currentComment.MId, currentComment);
+                    }
+                    currentComment.Members.Add(member);
+                    return currentComment;
+                }
+                , splitOn: "MId");
+                return comments.Distinct().ToList();
+            }
+        }
     }
 }
