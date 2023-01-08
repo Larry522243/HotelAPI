@@ -166,7 +166,7 @@ namespace HotelAPI.Controllers
         ///查詢所有的Comments，以及它底下的所有Members資料
         /// </summary>
         [HttpGet]
-        [Route("mutiple")]
+        [Route("multiple")]
         public async Task<IActionResult> GetCommentsMembersMultipleMapping()
         {
             try

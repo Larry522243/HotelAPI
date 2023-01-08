@@ -12,12 +12,12 @@ namespace HotelAPI.Contracts
         public Task<IEnumerable<OrderDetail>> GetSingleOrderDetails(String oid);
 
         //批次新增OrderDetail資料
-        public Task CreateMutipleOrderDetails(List<OrderDetail> orderDetails);
+        public Task CreateMultipleOrderDetails(List<OrderDetail> orderDetails);
 
         //批次修改指定ID的OrderDetail資料
-        public Task UpdateMutipleOrderDetails(String oid, List<OrderDetail> orderDetails);
+        public Task UpdateMultipleOrderDetails(String oid, List<OrderDetail> orderDetails);
 
         //刪除指定ID的OrderDetail資料
-        public Task DeleteMutipleOrderDetails(String oid);
+        public Task DeleteMultipleOrderDetails(String oid);
     }
 }

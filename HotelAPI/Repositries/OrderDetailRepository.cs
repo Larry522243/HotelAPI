@@ -43,7 +43,7 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 批次新增OrderDetail資料
         /// </summary>
-        public async Task CreateMutipleOrderDetails(List<OrderDetail> orderDetails)
+        public async Task CreateMultipleOrderDetails(List<OrderDetail> orderDetails)
         {
             var sqlQuery = "INSERT INTO OrderDetails (OId, RId) VALUES (@OId, @RId)";
 
@@ -68,7 +68,7 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 批次修改指定ID的OrderDetail資料
         /// </summary>
-        public async Task UpdateMutipleOrderDetails(String oid, List<OrderDetail> orderDetails)
+        public async Task UpdateMultipleOrderDetails(String oid, List<OrderDetail> orderDetails)
         {
             var sqlQuery = "UPDATE OrderDetails SET OId = @OId, RID = @RId";
 
@@ -92,7 +92,7 @@ namespace HotelAPI.Repositries
         /// <summary>
         /// 刪除指定ID的OrderDetail資料
         /// </summary>
-        public async Task DeleteMutipleOrderDetails(String oid)
+        public async Task DeleteMultipleOrderDetails(String oid)
         {
             var sqlQuery = "DELETE FROM OrderDetails WHERE OId = @OId";
             var parameters = new DynamicParameters();
