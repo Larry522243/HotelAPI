@@ -8,16 +8,16 @@ namespace HotelAPI.Contracts
         //查詢所有OrderDetail資料
         public Task<IEnumerable<OrderDetail>> GetOrderDetails();
 
-        //查詢指定OrderID的OrderDetail資料
-        public Task<IEnumerable<OrderDetail>> GetSingleOrderDetails(String oid);
+        //查詢指定OrderID的單一OrderDetail資料
+        public Task<OrderDetail> GetOrderDetail(String oid);
 
         //批次新增OrderDetail資料
-        public Task CreateMultipleOrderDetails(List<OrderDetail> orderDetails);
+        public Task CreateMultipleOrderDetails(List<OrderDetailForCreationDto> orderDetails);
 
         //批次修改指定ID的OrderDetail資料
-        public Task UpdateMultipleOrderDetails(String oid, List<OrderDetail> orderDetails);
+        //public Task UpdateMultipleOrderDetails(String oid, OrderDetailForUpdateDto orderDetails);
 
         //刪除指定ID的OrderDetail資料
-        public Task DeleteMultipleOrderDetails(String oid);
+        public Task DeletOrderDetail(String oid);
     }
 }
