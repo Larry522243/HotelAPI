@@ -94,5 +94,20 @@ namespace HotelAPI.Repositries
                 return updatedFacility;
             }
         }
+
+        /// <summary>
+        /// 刪除指定ID的Facility資料
+        /// </summary>
+        public async Task DeleteFacility(int fid)
+        {
+            var sqlQuery = "DELETE FROM  Facilities WHERE FId = @FId";
+            var parameters = new DynamicParameters();
+            parameters.Add("FId", fid, DbType.Int16);
+
+            using (var connection = new SqlConnection(_connectionString))
+            {
+                await connection.ExecuteAsync(sqlQuery, parameters);
+            }
+        }
     }
 }

@@ -16,5 +16,8 @@ namespace HotelAPI.Contracts
 
         //修改指定ID的Facility資料
         public Task<Facility> UpdateFacility(int Fid, FacilityForUpdateDto Facility);
+
+        //刪除指定ID的Facility資料
+        public Task DeleteFacility(int Fid);
     }
 }

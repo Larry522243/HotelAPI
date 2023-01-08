@@ -42,29 +42,6 @@ namespace HotelAPI.Controllers
             }
         }
 
-
-        ///// <summary>
-        ///// 查詢所有訂單資料
-        ///// </summary>
-        //[HttpGet]
-        //public async Task<IActionResult> GetOrders()
-        //{
-        //    try
-        //    {
-        //        var orders = await _orderRepo.GetOrders();
-        //        return Ok(new
-        //        {
-        //            Success = true,
-        //            Message = "All Orders returned.",
-        //            orders,
-        //        });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
         /// <summary>
         /// 查詢指定ID的單一訂單資料
         /// </summary>

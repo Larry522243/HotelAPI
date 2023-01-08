@@ -86,21 +86,28 @@ namespace HotelAPI.Controllers
         /// <summary>
         /// 批次修改指定ID的OrderDetail資料
         /// </summary>
-        //[HttpPatch]
-        //[Route("{id}")]
-        //public async Task<IActionResult> UpdateOrderDetails(String id, OrderDetailForUpdateDto orderDetails)
-        //{
-        //    try
-        //    {
-                
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return StatusCode(500, ex.Message);
-        //    }
-        //}
-
-
+        [HttpPatch]
+        [Route("{id}")]
+        public async Task<IActionResult> UpdateOrderDetails(String id, List<OrderDetailForUpdateDto> orderDetails)
+        {
+            try
+            {
+                var dbOrderDetails = await _orderDetailRepo.GetOrderDetail(id);
+                if (dbOrderDetails == null)
+                    return NotFound();
+                await _orderDetailRepo.UpdateMultipleOrderDetails(id, orderDetails);
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "Order details updated.",
+                    orderDetails,
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
 
         /// <summary>
         /// 刪除指定ID的OrderDetail資料

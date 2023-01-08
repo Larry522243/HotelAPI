@@ -45,7 +45,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpGet]
         [Route("{id}")]
-        public async Task<IActionResult> GetFacility(Int16 id)
+        public async Task<IActionResult> GetFacility(int id)
         {
             try
             {
@@ -92,7 +92,7 @@ namespace HotelAPI.Controllers
         /// </summary>
         [HttpPatch]
         [Route("{id}")]
-        public async Task<IActionResult> UpdateFacility(Int16 id, FacilityForUpdateDto facility)
+        public async Task<IActionResult> UpdateFacility(int id, FacilityForUpdateDto facility)
         {
             try
             {
@@ -113,7 +113,29 @@ namespace HotelAPI.Controllers
             }
         }
 
-
-
+        /// <summary>
+        /// 刪除指定ID的Facility資料
+        /// </summary>
+        [HttpDelete]
+        [Route("{id}")]
+        public async Task<IActionResult> DeleteFacility(int id)
+        {
+            try
+            {
+                var dbFacility = await _facilityRepo.GetFacility(id);
+                if (dbFacility == null)
+                    return NotFound();
+                await _facilityRepo.DeleteFacility(id);
+                return Ok(new
+                {
+                    Success = true,
+                    Message = "Facility Deleted.",
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, ex.Message);
+            }
+        }
     }
 }
