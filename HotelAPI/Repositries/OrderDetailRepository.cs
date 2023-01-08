@@ -57,7 +57,7 @@ namespace HotelAPI.Repositries
                     {
                         var parameters = new DynamicParameters();
                         parameters.Add("OId", orderDetail.OId, DbType.String);
-                        parameters.Add("RId", orderDetail.RId, DbType.Guid);
+                        parameters.Add("RId", orderDetail.RId, DbType.String);
                         await connection.ExecuteAsync(query, parameters, transaction);
                     }
                     transaction.Commit();
